@@ -1,40 +1,57 @@
 # Testing Database Queries with Tape
 
+## Learning Objectives
+
+To be able to:
+
+* Create and set up a test database
+* Test database queries
+
+## Getting Started
+
 To test database queries first you need to mock a database, this will stop you
 accidentally deleting or modifying important data.
 
-## 1. Create tests folder
+1. Create tests folder:
 
-* Copy files `db_build.js` and `db_build.sql` from the database folder. Rename
-  them to `test_db_build.js` and `test_db_build.sql`.
-* Create file `tests.js`.
+* Create `tests` folder in the root folder.
+* Copy files `db_build.js` and `db_build.sql` from the `database` folder to
+  `tests`. Rename them to `test_db_build.js` and `test_db_build.sql`.
+* Create file `tests.js` in `tests`.
 
-## 2. Set up your test database:
+2. Set up your test database:
 
-This workshop is based on the
-[pg-workshop](https://github.com/foundersandcoders/pg-workshop) we've just
-completed. That's why we assume that you've already set up your local database,
-and your config.env contains your database url.
+   This workshop is based on the
+   [pg-workshop](https://github.com/foundersandcoders/pg-workshop) we've just
+   completed. That's why we assume that you've already set up your local
+   database. Create `config.env` and copy the database url from
+   [pg-workshop](https://github.com/foundersandcoders/pg-workshop) in it.
 
-#### 1. Now we have to set up a test database and add its url to config.env.
+* Now we have to set up a test database and add its url to config.env.
 
-    #### Follow these steps if you have doubts how to set up a database:
+  _Follow these steps if you have doubts how to set up a database:_
 
-    In terminal type psql, or pgcli if installed. Within psql/pcli enter the following commands
-    each followed by a return. Things in square brackets are for your desired values.
-    Note that password is a string inside '' (NOT double quotes -> ""):
-    ```
-    CREATE DATABASE [db_name];
-    CREATE USER [user_name] WITH PASSWORD ['password'];
-    ```
-    Now you can set the database url in your config.env as
-    follows (setting the values in square brackets to the values you defined in the steps above):
+  In terminal type psql, or pgcli if installed. Within psql/pcli enter the
+  following commands each followed by a return. Things in square brackets are
+  for your desired values. Note that password is a string inside '' (NOT double
+  quotes -> ""):
 
-    `postgres://[user_name]:[password]@localhost:5432/[db_name]`
+  ```
+  CREATE DATABASE [db_name];
+  CREATE USER [user_name] WITH PASSWORD ['password'];
+  ```
 
-#### 2. Next run the test_db_build.js file in terminal: `node tests/test_db_build.js`. This will create the schema and populate your test database with data from `test_db_build.sql`.
+  Now you can set the database url in your config.env as follows (setting the
+  values in square brackets to the values you defined in the steps above):
 
-#### 3. Now we have to specify in which cases we use the real database and in which cases we use the test one. To do that we have to set up a NODE_ENV variable:
+  `TEST_DB_URL = postgres://[user_name]:[password]@localhost:5432/[db_name]`
+
+* Next run the test_db_build.js file in terminal: `node tests/test_db_build.js`.
+  This will create the schema and populate your test database with data from
+  `test_db_build.sql`.
+
+* Now we have to specify in which cases we use the real database and in which
+  cases we use the test one. To do that we have to set up a NODE_ENV variable:
 
 > NODE_ENV is an environment variable popularized by the Express framework. It
 > specifies the environment in which an application is running such as
@@ -63,34 +80,56 @@ const params = url.parse(DB_URL);
 The last thing to do here is to add a script in `package.json` to run your
 tests: `"test": "NODE_ENV=test node tests/test.js",`
 
-#### 4. We are almost ready to write the tests. An important idea to keep in mind is that before running the tests we need to make sure that our test database is at its default state. That's why before running every single test we have to rerun the script from `test_db_build.js` to restart the database.
+* We are almost ready to write the tests. An important idea to keep in mind is
+  that before running the tests we need to make sure that our test database is
+  at its default state. That's why before running every single test we have to
+  rerun the script from `test_db_build.js` to restart the database.
 
-To make sure that any tests will be executed only after the database has been
-restarted make sure that the `runDbBuild` function in `test_db_build.js` is a
-callback function.
+* To make sure that any tests will be executed only after the database has been
+  restarted make sure that the `runDbBuild` function in `test_db_build.js` is a
+  callback function:
 
-### Now you are ready to write some tests!
+```
+const runDbBuild = (cb) => {
+  dbConnection.query(sql, (err, res) => {
+      if (err) return cb(err);
+      cb(null, res)
+  });
+};
+```
+
+#### Now you are ready to write some tests!
 
 ## Tests
 
-#### 1. To start off lets make sure that all of the information we expect to be in the tables has, in fact been properly populated.
+* In your `tests.js` require tape, runDbBuild function and queries that you are
+  going to test:
 
-* Write a test to make sure that the information in the users table is what you
-  expect.
+```
+const tape = require('tape');
+const runDbBuild = require('./test_db_build');
+const getData = require('../src/queries/getData');
+const postData = require('../src/queries/postData');
+```
 
-Make sure that you are running the `test_db_build.js` before every test!
+* Check that tape is working by running this test:
 
-#### 2. Now we know the tables have been populated properly, lets test whether inserting into the tables works as expected.
+```
+  tape('tape is working', (t) => {
+  t.equals(1, 1, 'one equals one');
+  t.end();
+});
+```
 
-* Create a test that inserts into the users table and that checks whether the
-  data has been added to the table correctly.
+* You are ready to test database queries! Remember that before every test you
+  have to restart the test database by calling runDbBuild function:
 
-When dealing with tests that insert data it is imperative that the test database
-is reset before every test otherwise the tables will change every time they are
-run.
+```
+tape('what you are going to test', (t)=> {
+  runDbBuild(function(err, res){
+   your test goes here
+  })
+})
+```
 
-#### 3. Write your own tests
-
-* Now you should experiment with writing your own tests. Try changing the
-  `test_db_build.sql` file and writing your own queries to test different
-  aspects of the database.
+* Now it's time to experiment with writing your tests! :)
