@@ -7,11 +7,12 @@ To be able to:
 * Create and set up a test database
 * Test database queries
 
-## Why do we need a test database???
+## Why do we need a test database??
 
 In this workshop we will be creating a test database, separate from our
-production database, that we will be running all tests on. Why do _you_ think
-it's important to have a separate database for testing?!
+production database, that we will be running all tests on.
+
+Why do _you_ think it's important to have a separate database for testing?
 
 ## Getting Started
 
