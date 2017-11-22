@@ -34,7 +34,7 @@ accidentally deleting or modifying important data.
 
   _Follow these steps if you have doubts how to set up a database:_
 
-################################################################################
+##################################################################
   In terminal type psql, or pgcli if installed. Within psql/pcli enter the
   following commands each followed by a return. Things in square brackets are
   for your desired values. Note that password is a string inside '' (NOT double
@@ -45,7 +45,7 @@ accidentally deleting or modifying important data.
   CREATE USER [user_name] WITH SUPERUSER PASSWORD ['password'];
   ALTER DATABASE [db_name] OWNER TO [user_name];
   ```
-################################################################################
+##################################################################
 
   Now you can set the database url in your config.env as follows (setting the
   values in square brackets to the values you defined in the steps above):
