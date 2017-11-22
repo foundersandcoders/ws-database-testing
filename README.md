@@ -151,11 +151,13 @@ tape('what you are going to test', (t)=> {
 
 ## _FYI(Additional Info)_
 
-It is often super useful to be able to have a second test db_build.sql that you
-use for testing. It can be full of test data, or setup so as not to interfere
-with the complex, and potentially user data filled, original database.
+On larger projects we may have a case where we want to create/remove additional
+tables within our database to run tests on. We obviously don't want to affect
+the original database so we need to have a separate db_build.sql file, purely
+for testing.
 
-One way in which you could implement this in db_build would be:
+One way in which you could implement this would be to add the following to your
+db_build.js:
 
 ```
 if(process.env.NODE_END = 'test') {
