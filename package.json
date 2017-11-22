@@ -4,7 +4,7 @@
   "description": "A workshop to get familiar with testing database queries",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test node tests/test.js",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },
@@ -20,7 +20,9 @@
   "homepage": "https://github.com/azayneeva/Database-Testing#readme",
   "dependencies": {
     "env2": "^2.2.0",
+    "eslint": "^4.11.0",
     "nodemon": "^1.12.1",
-    "pg": "^7.4.0"
+    "pg": "^7.4.0",
+    "tape": "^4.8.0"
   }
 }
