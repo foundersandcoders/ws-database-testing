@@ -5,5 +5,5 @@ const server = http.createServer(router);
 const port = process.env.PORT || 5001;
 
 server.listen(port, () => {
-    console.log(`Magic happens on port ${port}`);
+  console.log(`Magic happens on port ${port}`);
 });

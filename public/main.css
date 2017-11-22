@@ -1,12 +1,14 @@
 /*Add styling below*/
+
 html, body {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial';
 }
+
 .nav-wrapper {
   text-align: center;
   padding: 10px 0;
@@ -21,8 +23,7 @@ body {
   text-decoration: none;
 }
 
-form,
-.table-container {
+form, .table-container {
   width: 60%;
   margin: 0 auto 50px;
 }
@@ -47,9 +48,8 @@ form button {
   font-size: 18px;
 }
 
-table,
-table tr {
-  width: 100%
+table, table tr {
+  width: 100%;
 }
 
 table tr th {
