@@ -11,10 +11,6 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, location) VALUES
-('Alina', 'Moscow'),
-('John', 'London'),
-('Eve', 'Paris'),
-('Perry', 'Auckland'),
-('Bex', 'Damascus');
+('Alina', 'Moscow');
 
 COMMIT;
