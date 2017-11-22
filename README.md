@@ -9,14 +9,15 @@ To be able to:
 
 ## Getting Started
 
+* Clone this repo
+* Navigate to it in your terminal and run `npm i`
+
 To test database queries first you need to mock a database, this will stop you
 accidentally deleting or modifying important data.
 
 1. Create tests folder:
 
 * Create `tests` folder in the root folder.
-* Copy files `db_build.js` and `db_build.sql` from the `database` folder to
-  `tests`. Rename them to `test_db_build.js` and `test_db_build.sql`.
 * Create file `tests.js` in `tests`.
 
 2. Set up your test database:
@@ -46,9 +47,11 @@ accidentally deleting or modifying important data.
 
   `TEST_DB_URL = postgres://[user_name]:[password]@localhost:5432/[db_name]`
 
-* Next run the test_db_build.js file in terminal: `node tests/test_db_build.js`.
-  This will create the schema and populate your test database with data from
-  `test_db_build.sql`.
+* Next open psql/pgcli in terminal and connect to your test database: `\c
+  [test_database_name]`
+* Run db_build.sql file to create the schema and populate your test database
+  with data: `\i [full_path_to_db_build.sql]` (To easily copy a file's full path
+  right click on it in atom and click on "Copy Full Path")
 
 * Now we have to specify in which cases we use the real database and in which
   cases we use the test one. To do that we have to set up a NODE_ENV variable:
@@ -78,16 +81,17 @@ const params = url.parse(DB_URL);
 ```
 
 The last thing to do here is to add a script in `package.json` to run your
-tests: `"test": "NODE_ENV=test node tests/test.js",`
+tests: `"test": "NODE_ENV=test node tests/test.js",` When you want to run your
+tests run `npm run test` in your terminal.
 
 * We are almost ready to write the tests. An important idea to keep in mind is
   that before running the tests we need to make sure that our test database is
   at its default state. That's why before running every single test we have to
-  rerun the script from `test_db_build.js` to restart the database.
+  rerun the script from `db_build.js` to restart the database.
 
 * To make sure that any tests will be executed only after the database has been
-  restarted make sure that the `runDbBuild` function in `test_db_build.js` is a
-  callback function:
+  restarted we need the `runDbBuild` function in `db_build.js` to be a callback
+  function, so that tests will only be run once runDbBuild has finished:
 
 ```
 const runDbBuild = (cb) => {
@@ -107,7 +111,7 @@ const runDbBuild = (cb) => {
 
 ```
 const tape = require('tape');
-const runDbBuild = require('./test_db_build');
+const runDbBuild = require("../src/database/db_build");
 const getData = require('../src/queries/getData');
 const postData = require('../src/queries/postData');
 ```
