@@ -34,6 +34,7 @@ accidentally deleting or modifying important data.
 
   _Follow these steps if you have doubts how to set up a database:_
 
+################################################################################
   In terminal type psql, or pgcli if installed. Within psql/pcli enter the
   following commands each followed by a return. Things in square brackets are
   for your desired values. Note that password is a string inside '' (NOT double
@@ -44,6 +45,7 @@ accidentally deleting or modifying important data.
   CREATE USER [user_name] WITH SUPERUSER PASSWORD ['password'];
   ALTER DATABASE [db_name] OWNER TO [user_name];
   ```
+################################################################################
 
   Now you can set the database url in your config.env as follows (setting the
   values in square brackets to the values you defined in the steps above):
@@ -52,7 +54,7 @@ accidentally deleting or modifying important data.
 
 * Next open psql/pgcli in terminal and connect to your test database: `\c
   [test_database_name]`
-* Run db_build.sql file to create the schema and populate your test database
+* Next you will run the db_build.sql file to create the schema and populate your test database
   with data: `\i [full_path_to_db_build.sql]` (To easily copy a file's full path
   right click on it in atom and click on "Copy Full Path")
 
@@ -75,7 +77,7 @@ In `db_connection.js` add this condition:
    }
 ```
 
-And don't forget to add these changes:
+And don't forget to replace the existing similar code with these changes:
 
 ```
 if (!DB_URL) throw new Error('Enviroment variable DB_URL must be set');
