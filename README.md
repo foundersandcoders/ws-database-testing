@@ -18,7 +18,9 @@ accidentally deleting or modifying important data.
 1. Create tests folder:
 
 * Create `tests` folder in the root folder.
-* Create file `tests.js` in `tests`.
+* Create file `test.js` in `tests`.
+* Because this workshop is all about testing we need to install tape: run `npm i
+  --save tape` in your terminal
 
 2. Set up your test database:
 
@@ -39,7 +41,8 @@ accidentally deleting or modifying important data.
 
   ```
   CREATE DATABASE [db_name];
-  CREATE USER [user_name] WITH PASSWORD ['password'];
+  CREATE USER [user_name] WITH SUPERUSER PASSWORD ['password'];
+  ALTER DATABASE [db_name] OWNER TO [user_name];
   ```
 
   Now you can set the database url in your config.env as follows (setting the
