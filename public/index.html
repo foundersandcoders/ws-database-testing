@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+  <head>
     <meta charset="utf-8">
     <title>PG workshop - get users from the database</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="main.css">
-</head>
+  </head>
 
-<body>
+  <body>
     <nav>
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo">Users</a>
-        </div>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Users</a>
+      </div>
     </nav>
     <form class="form" action="/create-user" method="post">
       <input type="text" name="name" value="" placeholder="name">
@@ -20,14 +20,14 @@
       <button type="submit" name="button">+ Add user</button>
     </form>
     <div class="table-container">
-        <table id="users-table">
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-            </tr>
-        </table>
+      <table id="users-table">
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+        </tr>
+      </table>
     </div>
     <script type="text/javascript" src="./app.js"></script>
-</body>
+  </body>
 
 </html>

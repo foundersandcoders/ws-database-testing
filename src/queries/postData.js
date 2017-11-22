@@ -1,8 +1,8 @@
-const databaseConnection = require("../database/db_connection.js");
+const databaseConnection = require('../database/db_connection.js');
 
 const postData = (name, location, cb) => {
   databaseConnection.query(
-    "INSERT INTO users (name, location) VALUES ($1, $2)",
+    'INSERT INTO users (name, location) VALUES ($1, $2)',
     [name, location],
     (err, res) => {
       if (err) {
