@@ -148,7 +148,7 @@ tape('what you are going to test', (t)=> {
 
 * Now it's time to experiment with writing your tests! :)
 
-##_FYI_
+## _FYI(Additional Info)_
 
 It is often super useful to be able to have a second test db_build.sql that you
 use for testing. It can be full of test data, or setup so as not to interfere
