@@ -1,26 +1,27 @@
 {
-  "name": "database-testing",
+  "name": "pg-workshop",
   "version": "1.0.0",
-  "description": "A workshop to get familiar with testing database queries",
+  "description": "A workshop to get familiar with postgres",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test node tests/test.js",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/azayneeva/Database-Testing.git"
+    "url": "git+https://github.com/shiryz/pg-workshop.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/azayneeva/Database-Testing/issues"
+    "url": "https://github.com/shiryz/pg-workshop/issues"
   },
-  "homepage": "https://github.com/azayneeva/Database-Testing#readme",
+  "homepage": "https://github.com/shiryz/pg-workshop#readme",
   "dependencies": {
     "env2": "^2.2.0",
-    "nodemon": "^1.12.1",
-    "pg": "^7.4.0"
-  }
+    "nodemon": "^1.11.0",
+    "pg": "^6.2.3"
+  },
+  "devDependencies": {}
 }
