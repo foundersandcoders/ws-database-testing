@@ -7,6 +7,13 @@ To be able to:
 * Create and set up a test database
 * Test database queries
 
+## Why do we need a test database??
+
+In this workshop we will be creating a test database, separate from our
+production database, that we will be running all tests on.
+
+Why do _you_ think it's important to have a separate database for testing?
+
 ## Getting Started
 
 * Clone this repo
@@ -19,8 +26,6 @@ accidentally deleting or modifying important data.
 
 * Create `tests` folder in the root folder.
 * Create file `test.js` in `tests`.
-* Because this workshop is all about testing we need to install tape: run `npm i
-  --save tape` in your terminal
 
 2. Set up your test database:
 
@@ -34,27 +39,30 @@ accidentally deleting or modifying important data.
 
   _Follow these steps if you have doubts how to set up a database:_
 
-  In terminal type psql, or pgcli if installed. Within psql/pcli enter the
-  following commands each followed by a return. Things in square brackets are
-  for your desired values. Note that password is a string inside '' (NOT double
-  quotes -> ""):
+##################################################################\
+ In terminal type psql, or pgcli if installed. Within psql/pcli enter the
+following commands each followed by a return. Things in square brackets are for
+your desired values. Note that password is a string inside '' (NOT double quotes
+-> ""):
 
-  ```
-  CREATE DATABASE [db_name];
-  CREATE USER [user_name] WITH SUPERUSER PASSWORD ['password'];
-  ALTER DATABASE [db_name] OWNER TO [user_name];
-  ```
+```
+CREATE DATABASE [db_name];
+CREATE USER [user_name] WITH SUPERUSER PASSWORD ['password'];
+ALTER DATABASE [db_name] OWNER TO [user_name];
+```
 
-  Now you can set the database url in your config.env as follows (setting the
-  values in square brackets to the values you defined in the steps above):
+##################################################################
 
-  `TEST_DB_URL = postgres://[user_name]:[password]@localhost:5432/[db_name]`
+Now you can set the database url in your config.env as follows (setting the
+values in square brackets to the values you defined in the steps above):
+
+`TEST_DB_URL = postgres://[user_name]:[password]@localhost:5432/[db_name]`
 
 * Next open psql/pgcli in terminal and connect to your test database: `\c
   [test_database_name]`
-* Run db_build.sql file to create the schema and populate your test database
-  with data: `\i [full_path_to_db_build.sql]` (To easily copy a file's full path
-  right click on it in atom and click on "Copy Full Path")
+* Next you will run the db_build.sql file to create the schema and populate your
+  test database with data: `\i [full_path_to_db_build.sql]` (To easily copy a
+  file's full path right click on it in atom and click on "Copy Full Path")
 
 * Now we have to specify in which cases we use the real database and in which
   cases we use the test one. To do that we have to set up a NODE_ENV variable:
@@ -75,7 +83,7 @@ In `db_connection.js` add this condition:
    }
 ```
 
-And don't forget to add these changes:
+And don't forget to replace the existing similar code with these changes:
 
 ```
 if (!DB_URL) throw new Error('Enviroment variable DB_URL must be set');
@@ -140,3 +148,24 @@ tape('what you are going to test', (t)=> {
 ```
 
 * Now it's time to experiment with writing your tests! :)
+
+## _FYI(Additional Info)_
+
+On larger projects we may have a case where we want to create/remove additional
+tables within our database to run tests on. We obviously don't want to affect
+the original database so we need to have a separate db_build.sql file, purely
+for testing.
+
+One way in which you could implement this would be to add the following to your
+db_build.js:
+
+```
+if(process.env.NODE_END = 'test') {
+  sql = fs.readFileSync(`${__dirname}/test_db_build.sql`).toString();
+} else {
+  sql = fs.readFileSync(`${__dirname}/db_build.sql`).toString();
+}
+```
+
+This will specify which file to use based on whether it's in a test environment
+or not.
