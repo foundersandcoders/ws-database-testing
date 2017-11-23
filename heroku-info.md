@@ -1,0 +1,2 @@
+From my understanding of your application, the website will be running on tablets at different charities, and then those tablets will be used by users. So the users of the site, for the sake of performance/your server, will essentially be how many tablets the site is running on, which is unlikely to be that high.  Considering this I would say hobby is likely to be enough. you can see the comparisons here: https://devcenter.heroku.com/articles/dyno-types
+
