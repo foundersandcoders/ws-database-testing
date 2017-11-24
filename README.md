@@ -10,10 +10,9 @@ To be able to:
 ## Why do we need a test database?
 
 In this workshop we will be creating a test database, separate from our
-production database, that we will be running all tests on. We have to do that as
-we don't want to affect the original database which may have important data in
-it. Can you think of any other reason why we wouldn't want to run our tests on
-our production database?
+production database, to run our tests on. We use a test database so that we can
+add, delete, or update data in our tests without affecting the original
+database.
 
 ## Getting Started
 
@@ -67,7 +66,7 @@ values in square brackets to the values you defined in the steps above):
   file's full path right click on it in atom and click on "Copy Full Path")
 
 * Now we have to specify in which cases we use the real database and in which
-  cases we use the test one. To do that we have to set up a NODE_ENV variable:
+  cases we use the test one. To do that we have to set up a `NODE_ENV` variable:
 
 > NODE_ENV is an environment variable popularized by the Express framework. It
 > specifies the environment in which an application is running such as
@@ -78,17 +77,17 @@ values in square brackets to the values you defined in the steps above):
 
 In `db_connection.js` add this condition:
 
-```
-  let DB_URL = process.env.DB_URL
-   if (process.env.NODE_ENV === 'test') {
-     DB_URL = process.env.TEST_DB_URL
-   }
+```js
+let DB_URL = process.env.DB_URL;
+if (process.env.NODE_ENV === "test") {
+  DB_URL = process.env.TEST_DB_URL;
+}
 ```
 
 And don't forget to replace the existing similar code with these changes:
 
-```
-if (!DB_URL) throw new Error('Enviroment variable DB_URL must be set');
+```js
+if (!DB_URL) throw new Error("Enviroment variable DB_URL must be set");
 
 const params = url.parse(DB_URL);
 ```
@@ -106,11 +105,11 @@ tests run `npm run test` in your terminal.
   restarted we need the `runDbBuild` function in `db_build.js` to be a callback
   function, so that tests will only be run once runDbBuild has finished:
 
-```
-const runDbBuild = (cb) => {
+```js
+const runDbBuild = cb => {
   dbConnection.query(sql, (err, res) => {
-      if (err) return cb(err);
-      cb(null, res)
+    if (err) return cb(err);
+    cb(null, res);
   });
 };
 ```
@@ -122,26 +121,26 @@ const runDbBuild = (cb) => {
 * In your `tests.js` require tape, runDbBuild function and queries that you are
   going to test:
 
-```
-const tape = require('tape');
+```js
+const tape = require("tape");
 const runDbBuild = require("../src/database/db_build");
-const getData = require('../src/queries/getData');
-const postData = require('../src/queries/postData');
+const getData = require("../src/queries/getData");
+const postData = require("../src/queries/postData");
 ```
 
 * Check that tape is working by running this test:
 
-```
-  tape('tape is working', (t) => {
-  t.equals(1, 1, 'one equals one');
+```js
+tape("tape is working", t => {
+  t.equals(1, 1, "one equals one");
   t.end();
 });
 ```
 
 * You are ready to test database queries! Remember that before every test you
-  have to restart the test database by calling runDbBuild function:
+  have to restart the test database by calling `runDbBuild` function:
 
-```
+```js
 tape('what you are going to test', (t)=> {
   runDbBuild(function(err, res){
    your test goes here
@@ -154,13 +153,14 @@ tape('what you are going to test', (t)=> {
 ## _FYI(Additional Info)_
 
 On larger projects we may want to have a test db_build.sql so that we can have a
-range of mock data to test on, that we don't want in our production code.
+range of fake data in our test database to test on. To do this our `db_build.js`
+will need to check which sql script it needs to run.
 
 One way in which you could implement this would be to add the following to your
-db_build.js:
+`db_build.js`:
 
-```
-if(process.env.NODE_END = 'test') {
+```js
+if ((process.env.NODE_END = "test")) {
   sql = fs.readFileSync(`${__dirname}/test_db_build.sql`).toString();
 } else {
   sql = fs.readFileSync(`${__dirname}/db_build.sql`).toString();
