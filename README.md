@@ -7,20 +7,22 @@ To be able to:
 * Create and set up a test database
 * Test database queries
 
-## Why do we need a test database??
+## Why do we need a test database?
 
 In this workshop we will be creating a test database, separate from our
-production database, that we will be running all tests on.
-
-Why do _you_ think it's important to have a separate database for testing?
+production database, that we will be running all tests on. We have to do that as
+we don't want to affect the original database which may have important data in
+it. Can you think of any other reason why we wouldn't want to run our tests on
+our production database?
 
 ## Getting Started
 
 * Clone this repo
 * Navigate to it in your terminal and run `npm i`
 
-To test database queries first you need to mock a database, this will stop you
-accidentally deleting or modifying important data.
+To test database queries first you need to create a test database, this will
+stop you accidentally deleting or modifying important data from the original
+database.
 
 1. Create tests folder:
 
@@ -151,10 +153,8 @@ tape('what you are going to test', (t)=> {
 
 ## _FYI(Additional Info)_
 
-On larger projects we may have a case where we want to create/remove additional
-tables within our database to run tests on. We obviously don't want to affect
-the original database so we need to have a separate db_build.sql file, purely
-for testing.
+On larger projects we may want to have a test db_build.sql so that we can have a
+range of mock data to test on, that we don't want in our production code.
 
 One way in which you could implement this would be to add the following to your
 db_build.js:
