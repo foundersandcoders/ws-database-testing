@@ -9,19 +9,14 @@ To be able to:
 
 ## Why do we need a test database?
 
-In this workshop we will be creating a test database, separate from our
-production database, to run our tests on. We use a test database so that we can
-add, delete, or update data in our tests without affecting the original
-database.
+In this workshop we will create a test database to run our tests on, which is separate from our production database. We use a test database so that we can add, delete, or update data in our tests without affecting the our production database.
 
 ## Getting Started
 
 * Clone this repo
 * Navigate to it in your terminal and run `npm i`
 
-To test database queries first you need to create a test database, this will
-stop you accidentally deleting or modifying important data from the original
-database.
+We are going to start by creating a test database for us to run our tests on.
 
 1. Create tests folder:
 
@@ -40,7 +35,7 @@ database.
 
   _Follow these steps if you have doubts how to set up a database:_
 
-##################################################################\
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  In terminal type psql, or pgcli if installed. Within psql/pcli enter the
 following commands each followed by a return. Things in square brackets are for
 your desired values. Note that password is a string inside '' (NOT double quotes
@@ -52,9 +47,9 @@ CREATE USER [user_name] WITH SUPERUSER PASSWORD ['password'];
 ALTER DATABASE [db_name] OWNER TO [user_name];
 ```
 
-##################################################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now you can set the database url in your config.env as follows (setting the
+Now you can set the test database url in your config.env as follows (setting the
 values in square brackets to the values you defined in the steps above):
 
 `TEST_DB_URL = postgres://[user_name]:[password]@localhost:5432/[db_name]`
@@ -103,7 +98,7 @@ tests run `npm run test` in your terminal.
 
 * To make sure that any tests will be executed only after the database has been
   restarted we need the `runDbBuild` function in `db_build.js` to be a callback
-  function, so that tests will only be run once runDbBuild has finished:
+  function, so that tests will only be run once `runDbBuild` has finished:
 
 ```js
 const runDbBuild = cb => {
