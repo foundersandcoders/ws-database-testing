@@ -9,7 +9,10 @@ To be able to:
 
 ## Why do we need a test database?
 
-In this workshop we will create a test database to run our tests on, which is separate from our production database. We use a test database so that we can add, delete, or update data in our tests without affecting the our production database.
+In this workshop we will create a test database to run our tests on, which is
+separate from our production database. We use a test database so that we can
+add, delete, or update data in our tests without affecting our production
+database.
 
 ## Getting Started
 
@@ -35,8 +38,9 @@ We are going to start by creating a test database for us to run our tests on.
 
   _Follow these steps if you have doubts how to set up a database:_
 
-___________________________________________________________________________________
- In terminal type psql, or pgcli if installed. Within psql/pcli enter the
+---
+
+In terminal type psql, or pgcli if installed. Within psql/pcli enter the
 following commands each followed by a return. Things in square brackets are for
 your desired values. Note that password is a string inside '' (NOT double quotes
 -> ""):
@@ -47,7 +51,7 @@ CREATE USER [user_name] WITH SUPERUSER PASSWORD ['password'];
 ALTER DATABASE [db_name] OWNER TO [user_name];
 ```
 
-___________________________________________________________________________________
+---
 
 Now you can set the test database url in your config.env as follows (setting the
 values in square brackets to the values you defined in the steps above):
@@ -147,9 +151,9 @@ tape('what you are going to test', (t)=> {
 
 ## _FYI(Additional Info)_
 
-On larger projects we may want to have a `test_db_build.sql so that we can have a
-range of fake data in our test database to test on. To do this our `db_build.js`
-will need to check which sql script it needs to run.
+On larger projects we may want to have a `test_db_build.sql` so that we can have
+a range of fake data in our test database to test on. To do this our
+`db_build.js` will need to check which sql script it needs to run.
 
 One way in which you could implement this would be to add the following to your
 `db_build.js`:
