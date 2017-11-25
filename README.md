@@ -9,7 +9,7 @@ To be able to:
 
 ## Why do we need a test database?
 
-In this workshop we will create a test database to run our tests on, which is separate from our production database. We use a test database so that we can add, delete, or update data in our tests without affecting the our production database.
+In this workshop we will create a test database to run our tests on, which is separate from our production database. We use a test database so that we can add, delete, or update data in our tests without affecting our production database.
 
 ## Getting Started
 
@@ -147,9 +147,7 @@ tape('what you are going to test', (t)=> {
 
 ## _FYI(Additional Info)_
 
-On larger projects we may want to have a `test_db_build.sql so that we can have a
-range of fake data in our test database to test on. To do this our `db_build.js`
-will need to check which sql script it needs to run.
+On larger projects we may want to have a `test_db_build.sql` so that we can have a range of fake data in our test database to test on. To do this our `db_build.js` will need to check which sql script it needs to run.
 
 One way in which you could implement this would be to add the following to your
 `db_build.js`:
