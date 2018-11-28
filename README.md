@@ -96,17 +96,19 @@ tests run `npm run test` in your terminal.
   at its default state. That's why before running every single test we have to
   rerun the script from `db_build.js` to restart the database.
 
-* To make sure that any tests will be executed only after the database has been
-  restarted we need the `runDbBuild` function in `db_build.js` to be a callback
-  function, so that tests will only be run once `runDbBuild` has finished:
+* To do this we need to turn the script into a function, `runDbBuild`, and export it. Then we can import it in the test file and build the database before running the tests.
 
 ```js
-const runDbBuild = cb => {
-  dbConnection.query(sql, (err, res) => {
-    if (err) return cb(err);
-    cb(null, res);
-  });
-};
+// before:
+// dbConnection.query(sql, (err, res) => {
+//   if (err) throw err;
+//   console.log('Users table created with result: ', res);
+// });
+
+// after:
+const runDbBuild = cb => dbConnection.query(sql, cb)
+
+module.exports = runDbBuild
 ```
 
 #### Now you are ready to write some tests!
