@@ -34,7 +34,7 @@ We are going to start by creating a test database for us to run our tests on.
 
 ### 1. Create a test database
 
-2. Set up your test database:
+Set up your test database:
 
    This workshop is based on the
    [pg-workshop](https://github.com/foundersandcoders/pg-workshop) we've just
@@ -102,7 +102,7 @@ const params = url.parse(DB_URL);
 
 ### 3. Create the test script
 
-1. Create a tests folder:
+Create a tests folder:
 
 * Create a `tests` folder in the root folder.
 * Create file `test.js` in `tests`.
