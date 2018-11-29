@@ -116,7 +116,20 @@ tests, run `npm run test` in your terminal.
   at its default state. That's why before running every single test we have to
   rerun the script from `db_build.js` to restart the database.
 
-### 4. Turn the db build script into a reusable function
+### 4. Connect with testing databas
+
+* A big projects maybe have different type of databas, database for development, database for production, and database for testing. To make sure you are running the testing databas, inside `db_build.js` we need to check that by:
+
+```js
+if ((process.env.NODE_END = "test")) {
+  //do something
+  // read test_db_bulid.js file
+} else {
+  //read db_build.js file
+}
+```
+
+### 5. Turn the db build script into a reusable function
 
 * To make sure that any tests will be executed only after the database has been
   restarted we need the `runDbBuild` function in `db_build.js` to be a callback
@@ -131,7 +144,7 @@ const runDbBuild = cb => {
 };
 ```
 
-### 5. Write tests!
+### 6. Write tests!
 
 * In your `tests.js` require tape, runDbBuild function and queries that you are
   going to test:
@@ -165,13 +178,24 @@ tape('what you are going to test', (t)=> {
 
 * Now it's time to experiment with writing your tests! :)
 
+
 ## Additional Info
 
-On larger projects we may want to have a `test_db_build.sql` so that we can have a range of fake data in our test database to test on. To do this our `db_build.js` will need to check which sql script it needs to run.
+On larger projects we may want to have a `test_db_build.sql` so that we can have a range of fake data in our test database to test on.
 
-One way in which you could implement this would be to add the following to your
-`db_build.js`:
+Original data should be exists in `db_build.js` file. To use it, you should create development database af first, then connect with development databas inside `db_connection.js` file.
+```js
+if (process.env.NODE_ENV === "test") {
+  DB_URL = process.env.TEST_DB_URL;
 
+}else if (process.env.NODE_ENV === "development") {
+  DB_URL = process.env.DEVELOPMENT_DB_URL;
+}else {
+  // do something
+}
+```
+
+ To do this our `db_build.js` file will need to check which sql script it needs to run.
 ```js
 if ((process.env.NODE_END = "test")) {
   sql = fs.readFileSync(`${__dirname}/test_db_build.sql`).toString();
@@ -179,6 +203,10 @@ if ((process.env.NODE_END = "test")) {
   sql = fs.readFileSync(`${__dirname}/db_build.sql`).toString();
 }
 ```
+
+One way in which you could implement this would be to add the following to your
+`db_build.js`:
+
 
 This will specify which file to use based on whether it's in a test environment
 or not.
