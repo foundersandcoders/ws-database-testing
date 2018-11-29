@@ -2,7 +2,11 @@ const fs = require('fs');
 
 const dbConnection = require('./db_connection.js');
 
-const sql = fs.readFileSync(`${__dirname}/db_build.sql`).toString();
+if ((process.env.NODE_END = "test")) {
+  sql = fs.readFileSync(`${__dirname}/test_db_build.sql`).toString();
+} else {
+  sql = fs.readFileSync(`${__dirname}/db_build.sql`).toString();
+}
 
 const runDbBuild = dbConnection.query(sql, (err, res) => {
   if (err) throw err;
