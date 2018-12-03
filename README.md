@@ -8,8 +8,8 @@ $ npx markdown-toc README.md
 * [Why do we need a test database?](#why-do-we-need-a-test-database)
 * [Let's go!](#lets-go)
   + [1. Create a test database](#1-create-a-test-database)
-  + [2. Configure the `db_connection` file](#2-configure-the-db_connection-file)
-  + [3. Create the test script](#3-create-the-test-script)
+  + [2. Create the test script](#2-create-the-test-script)
+  + [3. Configure the `db_connection` file](#3-configure-the-db_connection-file)
   + [4. Turn the db build script into a reusable function](#4-turn-the-db-build-script-into-a-reusable-function)
   + [5. Write tests!](#5-write-tests)
 * [Additional Info](#additional-info)
@@ -71,22 +71,36 @@ values in square brackets to the values you defined in the steps above):
   test database with data: `\i [full_path_to_db_build.sql]` (To easily copy a
   file's full path right click on it in atom and click on "Copy Full Path")
 
-### 2. Configure the `db_connection` file
+### 2. Create the test script
+
+* First create a `tests` folder in the root folder.
+* Then create a file `db_tests.js` inside the `tests` folder.
+
+* Then add a script in `package.json` to run your tests:
+```js
+"test": "NODE_ENV=test node tests/db_tests.js"
+```
+
+**Q:** What is the `NODE_ENV` environment variable?
+
+> `NODE_ENV` is an environment variable popularized by the Express framework. It specifies the environment in which an application is running- typical values are development, staging, production and test.
+>
+> By default, our application will run in development environment.
+
+**Q:** Why do we set the `NODE_ENV` environment variable?
+
+We can access the environment variables in node via the `process.env` object (try `console.log(process.env)` in the node command line REPL). In the next step we will access `process.env.NODE_ENV` to decide which database to connect to.
+
+### 3. Configure the `db_connection` file
 
 * Now we have to specify in which cases we use the real database and in which
-  cases we use the test one. To do that we have to set up a `NODE_ENV` variable:
-
-> NODE_ENV is an environment variable popularized by the Express framework. It
-> specifies the environment in which an application is running such as
-> development, staging, production, testing, etc.
->
-> By default, our application will run in development environment. And we can
-> change the environment by changing process.env.NODE_ENV.
+  cases we use the test one. To do that we check the `process.env.NODE_ENV` variable.
 
 In `db_connection.js` add this condition:
 
 ```js
 let DB_URL = process.env.DB_URL;
+
 if (process.env.NODE_ENV === "test") {
   DB_URL = process.env.TEST_DB_URL;
 }
@@ -99,17 +113,6 @@ if (!DB_URL) throw new Error("Enviroment variable DB_URL must be set");
 
 const params = url.parse(DB_URL);
 ```
-
-### 3. Create the test script
-
-Create a tests folder:
-
-* Create a `tests` folder in the root folder.
-* Create file `test.js` in `tests`.
-
-Then add a script in `package.json` to run your
-tests: `"test": "NODE_ENV=test node tests/test.js",` When you want to run your
-tests, run `npm run test` in your terminal.
 
 ### 4. Turn the db build script into a reusable function
 
