@@ -84,8 +84,6 @@ values in square brackets to the values you defined in the steps above):
 **Q:** What is the `NODE_ENV` environment variable?
 
 > `NODE_ENV` is an environment variable popularized by the Express framework. It specifies the environment in which an application is running- typical values are development, staging, production and test.
->
-> By default, our application will run in development environment.
 
 **Q:** Why do we set the `NODE_ENV` environment variable?
 
