@@ -4,9 +4,8 @@
   "description": "A workshop to get familiar with testing database queries",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test node tests/test.js",
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "dev": "NODE_ENV=development nodemon src/server.js",
+    "start": "NODE_ENV=production node src/server.js"
   },
   "repository": {
     "type": "git",
